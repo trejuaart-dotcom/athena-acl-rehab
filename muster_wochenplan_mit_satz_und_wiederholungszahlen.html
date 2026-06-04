@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athena ACL Rehab - Wegweiser für Frauen</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fdf4f5',
+                            100: '#fbe8eb',
+                            200: '#f7d5d9',
+                            500: '#e05368',
+                            600: '#cc3b52',
+                            700: '#ab2c40',
+                            900: '#641b26',
+                        },
+                        tealbrand: {
+                            50: '#f0fdfa',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- NAVIGATION BAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-brand-500 text-white p-2 rounded-xl shadow-md shadow-brand-200">
+                        <!-- Lotus/Shield Hybrid SVG Icon -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900">ATHENA</span>
+                        <span class="text-xs block text-brand-500 font-bold uppercase tracking-widest -mt-1">ACL Rehab Companion</span>
+                    </div>
+                </div>
+
+                <!-- Surgery Mode Toggle -->
+                <div class="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                    <button id="btnPrimaryMode" onclick="setRehabMode('primary')" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 bg-white shadow-xs text-slate-800">
+                        Primär-OP
+                    </button>
+                    <button id="btnRevisionMode" onclick="setRehabMode('revision')" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 text-slate-500 hover:text-slate-800">
+                        Rezidiv-OP 🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Introduction Banner -->
+        <div class="bg-gradient-to-r from-brand-900 via-brand-700 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl mb-8 relative overflow-hidden">
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-brand-500 rounded-full blur-3xl opacity-20"></div>
+            <div class="absolute -left-16 -top-16 w-48 h-48 bg-teal-500 rounded-full blur-2xl opacity-10"></div>
+            
+            <div class="relative z-10 max-w-3xl">
+                <div class="inline-flex items-center space-x-2 bg-brand-500/20 border border-brand-500/30 text-brand-200 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+                    <span>Feminin-spezifischer Fokus</span>
+                    <span class="w-1.5 h-1.5 bg-brand-500 rounded-full animate-ping"></span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Deine persönliche Kreuzband-Rehabilitation</h1>
+                <p class="text-slate-200 mt-2 text-sm sm:text-base leading-relaxed">
+                    Frauen haben anatomisch, hormonell und neuromuskulär bedingt ein 2–8-fach erhöhtes Risiko für VKB-Verletzungen. Dieser evidenzbasierte Wegweiser führt dich sicher durch jede Phase von Tag 1 bis Tag 365.
+                </p>
+                <div id="rehabModeAlert" class="mt-4 inline-block bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-200">
+                    <span class="font-bold">Aktueller Modus:</span> Standard-Rehabilitationsplan (9-12 Monate).
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE GENDER & BIOLOGY TAB -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Left 2 Cols: Interactive Phase Guide -->
+            <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-slate-200 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Interaktiver Phasen-Fahrplan</h2>
+                        <p class="text-xs text-slate-500">Wähle deine aktuelle Phase, um Pläne, Checklisten und Übungen zu sehen</p>
+                    </div>
+                    <!-- Day Indicator HUD -->
+                    <div class="bg-white border border-slate-200 px-4 py-2 rounded-2xl flex items-center space-x-3 shadow-xs">
+                        <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse"></span>
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase block font-bold tracking-wider">Fortschritt</span>
+                            <span id="dayIndicator" class="text-sm font-extrabold text-slate-800">Tag 1 - 365+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase Pills Navigation -->
+                <div class="p-4 bg-white border-b border-slate-100 flex overflow-x-auto gap-2 no-scrollbar">
+                    <button onclick="switchPhase(0)" id="tabPhase0" class="phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-brand-500 text-white border-brand-500">
+                        <span class="bg-white/20 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold">0</span>
+                        <span>Phase 0: Post-OP (Wo 0-6)</span>
+                    </button>
+                    <button onclick="switchPhase(1)" id="tabPhase1" class="phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100">
+                        <span class="bg-slate-200 text-slate-700 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold">1</span>
+                        <span>Phase 1: Aufbau (Wo 6-12)</span>
+                    </button>
+                    <button onclick="switchPhase(2)" id="tabPhase2" class="phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100">
+                        <span class="bg-slate-200 text-slate-700 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold">2</span>
+                        <span>Phase 2: Fortgeschritten (Wo 12-24)</span>
+                    </button>
+                    <button onclick="switchPhase(3)" id="tabPhase3" class="phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100">
+                        <span class="bg-slate-200 text-slate-700 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold">3</span>
+                        <span>Phase 3: Return to Sport (Monat 6-9+)</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Content Container -->
+                <div class="p-6 flex-1">
+                    <!-- Phase Title Info -->
+                    <div id="phaseHeaderArea" class="mb-6">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span id="phaseBadge" class="bg-brand-100 text-brand-700 text-xs px-2.5 py-1 rounded-full font-bold uppercase">WOCHE 0–6</span>
+                            <span id="phaseTimelineIndicator" class="text-xs text-slate-400 font-medium">Tag 1 - 42</span>
+                        </div>
+                        <h3 id="phaseTitle" class="text-2xl font-bold text-slate-900">Phase 0: Postoperativ & Schutz</h3>
+                        <p id="phaseSubtitle" class="text-slate-500 text-sm mt-1">Ziel: Volle Streckung erreichen, Schwellungsmanagement und frühe Aktivierung des Quadrizeps.</p>
+                    </div>
+
+                    <!-- Tabs Inside Phase: Exercises / Milestones Checklist / Tips -->
+                    <div class="flex border-b border-slate-100 mb-6">
+                        <button id="subTabExercises" onclick="switchSubTab('exercises')" class="pb-3 px-4 border-b-2 border-brand-500 font-semibold text-sm text-brand-500 transition-colors">
+                            🏋️‍♀️ Übungen & Pläne
+                        </button>
+                        <button id="subTabChecklist" onclick="switchSubTab('checklist')" class="pb-3 px-4 border-b-2 border-transparent font-semibold text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center space-x-1.5">
+                            <span>✅ Meilensteine & Kriterien</span>
+                            <span id="checkedCount" class="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded-full font-bold">0/4</span>
+                        </button>
+                    </div>
+
+                    <!-- Phase Sub-Content Area -->
+                    <div id="subContentArea">
+                        <!-- Dynamic Exercise Cards rendered by JavaScript -->
+                        <div id="exerciseSection" class="space-y-4">
+                            <!-- Exercises Dynamic Output -->
+                        </div>
+
+                        <!-- Checklist Section (Hidden by default) -->
+                        <div id="checklistSection" class="hidden space-y-4">
+                            <div class="bg-brand-50/50 border border-brand-100 p-4 rounded-2xl mb-4">
+                                <h4 class="text-xs font-bold text-brand-900 uppercase tracking-wider mb-1">🛡️ Wichtiger Übergangshinweis</h4>
+                                <p class="text-xs text-brand-700 leading-relaxed">
+                                    Gehe erst zur nächsten Phase über, wenn alle untenstehenden biologischen und funktionellen Kriterien positiv abgehakt wurden. Ein vorschneller Wechsel erhöht das Rezidiv-Risiko erheblich.
+                                </p>
+                            </div>
+                            <div id="checklistContainer" class="space-y-2">
+                                <!-- Checkboxes dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Col: Biological & Female Specific Control Center -->
+            <div class="space-y-8">
+                <!-- Why Women section -->
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-20 h-20 bg-brand-50 rounded-full -mr-5 -mt-5 opacity-40"></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center space-x-2">
+                        <span>👩 Female-Specific Risk Factors</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        Frauen verletzen sich biomechanisch und hormonell bedingt signifikant häufiger am Knie. Nutze diese Erkenntnisse gezielt für deine Rehabilitation.
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-extrabold text-slate-700">Breiteres Becken (Q-Winkel)</span>
+                                <span class="bg-slate-200 text-slate-700 text-[9px] px-1.5 py-0.5 rounded-md font-bold">Anatomisch</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-1">Erhöht die Neigung zum „X-Bein“ (dynamischer Valgus). Konstantes Gluteus-Medius-Training ist Pflicht.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-extrabold text-slate-700">Quadrizeps-Dominanz</span>
+                                <span class="bg-slate-200 text-slate-700 text-[9px] px-1.5 py-0.5 rounded-md font-bold">Neuromuskulär</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-1">Frauen bremsen oft rein über den Quadrizeps. Das Hamstring-Training (Beinbeuger) fungiert als direkter Schutzschild für das VKB.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menstrual Cycle Sync Tool -->
+                <div class="bg-gradient-to-b from-brand-50 to-white rounded-3xl border border-brand-100 p-6 shadow-xs relative">
+                    <div class="absolute top-4 right-4 bg-brand-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        Zyklus-Planer
+                    </div>
+                    <h3 class="text-base font-bold text-brand-900 mb-1">Zyklus-basiertes Reha-Training</h3>
+                    <p class="text-[11px] text-brand-700 mb-4">Passe die Intensität hormonabhängig an, um Bindegewebslaxizität und Maximalkraft zu optimieren.</p>
+
+                    <div class="mb-4">
+                        <label for="cycleDayInput" class="block text-xs font-semibold text-slate-600 mb-1">Aktueller Zyklustag (1 - 28):</label>
+                        <div class="flex space-x-2">
+                            <input type="number" id="cycleDayInput" min="1" max="28" value="14" oninput="calculateCycleImpact()" class="w-20 px-3 py-2 bg-white border border-brand-200 rounded-xl text-center font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <button onclick="calculateCycleImpact()" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold rounded-xl transition-all">Analyse berechnen</button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Output box -->
+                    <div id="cycleResultBox" class="bg-white border border-brand-100 p-4 rounded-2xl space-y-2">
+                        <div class="flex items-center justify-between border-b border-slate-50 pb-2">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Phase:</span>
+                            <span id="cyclePhaseName" class="text-xs font-extrabold text-brand-600">Ovulationsphase (Eisprung)</span>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-xs font-semibold text-slate-700 block">⚡ Verletzungsrisiko & Laxizität:</span>
+                            <p id="cycleRiskDesc" class="text-[11px] text-slate-500 leading-relaxed">Östrogen ist am Peak. Die Gelenkbänder sind nachweislich laxer. Vorsicht bei unkontrollierter Plyometrie!</p>
+                        </div>
+                        <div class="space-y-1 bg-brand-50/50 p-2.5 rounded-xl border border-brand-50/80">
+                            <span class="text-[11px] font-extrabold text-brand-900 uppercase tracking-widest block">🎯 Reha-Empfehlung:</span>
+                            <p id="cycleRehabRec" class="text-[11px] text-brand-800 font-medium">Fokus auf saubere Beugestabilität und neurokognitive Kontrolle. Reduziere ggf. schwerste einbeinige Maximalbelastungen heute.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Valgus Visualizer Card -->
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs">
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Dynamische Valgus-Prävention</h3>
+                    <p class="text-xs text-slate-500 mb-4">Ein einknickendes Knie bei Landungen ist die Hauptursache für erneute VKB-Rupturen bei Frauen.</p>
+                    
+                    <div class="flex items-center justify-around py-2 border-y border-slate-100 mb-4">
+                        <div class="text-center">
+                            <div class="text-[10px] font-extrabold text-rose-500 uppercase">Valgus (X-Bein)</div>
+                            <div class="w-16 h-20 mx-auto bg-slate-50 rounded-xl border border-rose-200 flex items-center justify-center mt-1 relative overflow-hidden">
+                                <!-- Dangerous SVG Valgus visualization -->
+                                <svg class="w-10 h-16 text-rose-500" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="8">
+                                    <path d="M50 20 L50 60 L15 110 M15 110 L50 180" stroke-linecap="round"/>
+                                    <circle cx="50" cy="20" r="10" fill="currentColor"/>
+                                    <!-- Angled Leg pointing inward (Valgus) -->
+                                    <path d="M50 60 L85 110 L50 180" stroke-linecap="round"/>
+                                    <circle cx="85" cy="110" r="8" fill="#ef4444"/>
+                                </svg>
+                            </div>
+                            <span class="text-[10px] text-slate-400 block mt-1">🔴 Riskant</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[10px] font-extrabold text-teal-600 uppercase">Neutral (Ideal)</div>
+                            <div class="w-16 h-20 mx-auto bg-slate-50 rounded-xl border border-teal-200 flex items-center justify-center mt-1 relative overflow-hidden">
+                                <!-- Safe SVG Straight leg visualization -->
+                                <svg class="w-10 h-16 text-teal-600" viewBox="0 0 100 200" fill="none" stroke="currentColor" stroke-width="8">
+                                    <path d="M50 20 L50 60 L25 110 M25 110 L25 180" stroke-linecap="round"/>
+                                    <circle cx="50" cy="20" r="10" fill="currentColor"/>
+                                    <!-- Straight Alignment -->
+                                    <path d="M50 60 L75 110 L75 180" stroke-linecap="round"/>
+                                    <circle cx="75" cy="110" r="8" fill="#14b8a6"/>
+                                </svg>
+                            </div>
+                            <span class="text-[10px] text-slate-400 block mt-1">🟢 Stabil</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-brand-50/50 rounded-2xl text-[11px] text-brand-900 border border-brand-50 leading-relaxed">
+                        <span class="font-bold">Athena Tipp:</span> Übe das Abfangen von Sprüngen vor dem Spiegel. Nutze den „Soft-Landing“-Cues: Leise landen und die Knie bewusst über der 2. und 3. Zehe halten.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE CALCULATORS & CLINICAL TESTING -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Left Tool: LSI Symmetrie Calculator -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="text-xl">🧮</span>
+                        <h3 class="text-lg font-bold text-slate-900">LSI (Limb Symmetry Index) Rechner</h3>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6 leading-relaxed">
+                        Der Limb Symmetry Index ist der Goldstandard für deine Genesung. Vor dem Übergang zum Laufen brauchst du &gt;70% Quadrizepssymmetrie. Für Sprünge (Plyometrie) und die Rückkehr in den Sport &gt;90% (bei Rezidiv idealerweise &gt;95%).
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1" for="uninjuredVal">Unverletztes Bein (z.B. kg o. cm):</label>
+                                <input type="number" id="uninjuredVal" value="100" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-center">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1" for="injuredVal">Operiertes Bein (z.B. kg o. cm):</label>
+                                <input type="number" id="injuredVal" value="75" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-center">
+                            </div>
+                        </div>
+
+                        <!-- Compute Action Button -->
+                        <button onclick="calculateLSI()" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm rounded-2xl transition-all shadow-xs">
+                            Symmetrie-Index berechnen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Output block -->
+                <div id="lsiResult" class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Berechneter LSI:</span>
+                        <span id="lsiValue" class="text-3xl font-black text-brand-600">75.0%</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="lsiBadge" class="inline-block bg-amber-100 text-amber-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full">Nicht bereit für Sport</span>
+                        <p id="lsiFeedback" class="text-[10px] text-slate-500 mt-1 max-w-[200px] leading-tight">Über 70% erreicht. Laufen mit Freigabe möglich. Aber noch unzureichend für Richtungswechsel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Tool: ACL-RSI Mental Assessment Survey -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="text-xl">🧠</span>
+                        <h3 class="text-lg font-bold text-slate-900">ACL-RSI (Psychologische Reife & Vertrauen)</h3>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        Die psychologische Barriere (Kinesiophobie/Angst vor erneuter Ruptur) ist bei Frauen und Rezidiven oft höher. Ein Score von <span class="font-bold text-brand-500">&gt;63</span> indiziert eine ausreichende psychologische Bereitschaft.
+                    </p>
+
+                    <!-- Sliders representing simplified interactive questions -->
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                                <span>1. Hast du Vertrauen in dein Knie beim Sport?</span>
+                                <span id="q1Val" class="text-brand-500 font-bold">50%</span>
+                            </div>
+                            <input type="range" id="q1" min="0" max="100" value="50" oninput="updateRSI()" class="w-full accent-brand-500">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                                <span>2. Hast du Angst vor einer erneuten Verletzung? (0 = Große Angst, 100 = Keine Angst)</span>
+                                <span id="q2Val" class="text-brand-500 font-bold">40%</span>
+                            </div>
+                            <input type="range" id="q2" min="0" max="100" value="40" oninput="updateRSI()" class="w-full accent-brand-500">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                                <span>3. Denkst du während deinen Alltagsübungen ans Knie? (0 = Ständig, 100 = Nie)</span>
+                                <span id="q3Val" class="text-brand-500 font-bold">60%</span>
+                            </div>
+                            <input type="range" id="q3" min="0" max="100" value="60" oninput="updateRSI()" class="w-full accent-brand-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Output block -->
+                <div id="rsiResult" class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">ACL-RSI SCORE:</span>
+                        <span id="rsiValue" class="text-3xl font-black text-brand-600">50%</span>
+                    </div>
+                    <div class="text-right">
+                        <span id="rsiBadge" class="inline-block bg-rose-100 text-rose-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full">Kinesiophobie hoch</span>
+                        <p id="rsiFeedback" class="text-[10px] text-slate-500 mt-1 max-w-[200px] leading-tight">Ggf. sportpsychologische Begleitung bei der Rückkehr heranziehen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPANDABLE FULL WEEKLY PLAN TEMPLATE (Phase 2 - Beispielwochenplan) -->
+        <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <span>🗓️ Kompletter Muster-Wochenplan</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">Beispiel für Phase 2 (Woche 12–24)</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">Etabliere feste Kraft- und Entlastungstage für strukturierten Gewebeaufbau. <span class="text-brand-600 font-bold">Wichtig: Halte 3 Minuten Pause zur Regeneration zwischen den einzelnen Sätzen ein!</span></p>
+                </div>
+            </div>
+
+            <!-- Program Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Mon -->
+                <div class="p-5 rounded-2xl bg-brand-50/20 border border-brand-100/50 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-brand-500 uppercase tracking-wider block mb-1">Montag</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Unterkörper – Knie-dominant</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Back Squats / Kniebeugen</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Bulgarian Split Squats</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Terminal Knee Extensions (TKE)</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Einbeinige Beinpresse</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Wadenheben (einbeinig)</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tue -->
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Dienstag</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Oberkörper (Drücken) & Core</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Bench Press / Bankdrücken</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Overhead Press (OHP)</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Dips / Liegestütze</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Trizepsstrecken am Seil</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Face Pulls (Schulterstabilität)</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wed -->
+                <div class="p-5 rounded-2xl bg-brand-50/20 border border-brand-100/50 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-brand-500 uppercase tracking-wider block mb-1">Mittwoch</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Unterkörper – Hüft-dominant (Schutz)</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Barbell Hip Thrusts</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Romanian Deadlifts (RDLs)</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Nordic Hamstring Curls</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Kopenhagen Adduktoren-Plank</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Swiss Ball Hamstring Curls</span>
+                                <span class="bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Thu -->
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Donnerstag</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Oberkörper (Ziehen) & Rumpf</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Langhantelrudern</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Klimmzüge / Lat Pulls</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Bizepscurls am Kabel</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Front- & Seitplanken (Haltesätze)</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Face Pulls / Nackenzug</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fri -->
+                <div class="p-5 rounded-2xl bg-teal-50/20 border border-teal-100/50 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">Freitag</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Unilateral & Antirotation</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-teal-100/50 text-xs">
+                                <span class="font-semibold text-slate-700">Step-Ups / Step-Downs</span>
+                                <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-teal-100/50 text-xs">
+                                <span class="font-semibold text-slate-700">Einbeinige Glute Bridges</span>
+                                <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-teal-100/50 text-xs">
+                                <span class="font-semibold text-slate-700">Pallof Press (Antirotation)</span>
+                                <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-teal-100/50 text-xs">
+                                <span class="font-semibold text-slate-700">Dead Bugs / Käferübung</span>
+                                <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-teal-100/50 text-xs">
+                                <span class="font-semibold text-slate-700">Bird Dog mit Miniband</span>
+                                <span class="bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sat / Sun -->
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between h-full">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Samstag & Sonntag</span>
+                        <h4 class="text-base font-extrabold text-slate-800">Plyometrie & Regeneration</h4>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Landetraining / Drop Landings</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Leichte Sprünge (Bilateral)</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze × 6-9 Wdh.</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Mobility & Dehnübungen</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze (Haltesätze)</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                                <span class="font-semibold text-slate-700">Faszienrolle & Ausradeln</span>
+                                <span class="bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-md text-[10px] shrink-0">3 Sätze à 5 Min.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="text-white font-bold block">Athena ACL Companion v2.0</span>
+                <span class="text-xs">Wissenschaftlich fundierter, frauspezifischer Rehabilitations-Plan.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FOR DYNAMIC DATA AND INTERACTIONS -->
+    <script>
+        // State variables
+        let currentRehabMode = 'primary'; // 'primary' or 'revision' (Rezidiv)
+        let activePhase = 0; // 0, 1, 2, 3
+        let activeSubTab = 'exercises'; // 'exercises' or 'checklist'
+
+        // Checklists tracking database
+        const checkedMilestones = {
+            primary: {
+                0: [false, false, false, false],
+                1: [false, false, false, false],
+                2: [false, false, false, false],
+                3: [false, false, false, false]
+            },
+            revision: {
+                0: [false, false, false, false],
+                1: [false, false, false, false],
+                2: [false, false, false, false],
+                3: [false, false, false, false]
+            }
+        };
+
+        // Complete Clinical Knowledge database
+        const phaseData = {
+            primary: {
+                0: {
+                    timeline: "Woche 0 – 6",
+                    days: "Tag 1 - 42",
+                    title: "Phase 0: Postoperativ & Schutz",
+                    subtitle: "Hauptfokus liegt auf dem Abschwellen, Schutz des Transplantats und Wiedererlangung der Kniestreckung.",
+                    exercises: [
+                        { name: "Passive Fersenerhöhung (Heel Prop)", desc: "Ferse für 10 min 3-5 Mal pro Tag erhöht ablegen, um die Schwerkraft für die volle Streckung nutzen zu lassen. Wichtigste Priorität!", reps: "3–5× täglich, 10 min", cat: "A) Beweglichkeit" },
+                        { name: "Heel Slides (gleitend)", desc: "Im Sitzen die Ferse langsam zum Gesäß ziehen und kontrolliert gleitend strecken, um die Beugung zu reaktivieren.", reps: "3 Sätze × 15 Wiederholungen", cat: "A) Beweglichkeit" },
+                        { name: "Quad Sets (Quadrizeps-Kontraktion)", desc: "Handtuchrolle unter das Knie legen, aktiv mit maximaler Kraft gegen die Unterlage drücken und 10 Sekunden halten.", reps: "3 Sätze × 20 Wiederholungen", cat: "B) Muskelaktivierung" },
+                        { name: "Straight Leg Raise (SLR)", desc: "Bein im Liegen komplett gestreckt anheben. Kann in Rücken-, Seit- und Bauchlage zur Aktivierung aller Hüftanteile erfolgen.", reps: "3 Sätze × 15 Wiederholungen", cat: "B) Muskelaktivierung" },
+                        { name: "Glute Bridges (beidbeinig)", desc: "Auf dem Rücken liegend die Hüfte anheben, Gesäß am höchsten Punkt fest anspannen, um Hüftstrecker zu aktivieren.", reps: "3 Sätze × 15 Wiederholungen", cat: "B) Muskelaktivierung" }
+                    ],
+                    milestones: [
+                        "Volle schmerzfreie Streckung (Extension 0°)",
+                        "Kontrolliert schmerzfreies Beugen auf mind. 90°",
+                        "Sauberes Anheben des gestreckten Beins (No Lag SLR)",
+                        "Normalisiertes, hinkfreies Gehen mit/ohne Gehhilfen"
+                    ]
+                },
+                1: {
+                    timeline: "Woche 6 – 12",
+                    days: "Tag 43 - 84",
+                    title: "Phase 1: Frühe Kraftaufbau-Phase",
+                    subtitle: "Fokus auf die kontrollierte, geschlossene kinetische Oberschenkelstärkung und neuromuskuläre Kniekontrolle.",
+                    exercises: [
+                        { name: "Beinpresse (beidbeinig → einbeinig)", desc: "Fokus auf schulterbreiten Stand und absolut stabile Knieführung. Knie nie über die Zehen knicken lassen.", reps: "3 Sätze × 12–15 Wdh.", cat: "A) Quadrizeps" },
+                        { name: "Step-Ups (kontrolliert)", desc: "Niedrige Stufe (15-30 cm). Fuß aufsetzen, Kraft aus dem oberen Bein holen. Absolut kein Einknicken (Valgus) zulassen.", reps: "3 Sätze × 10 Wdh. pro Bein", cat: "A) Quadrizeps" },
+                        { name: "Wall Sits (Wandbeuge)", desc: "Rücken fest an die Wand pressen, Knie auf 60° bis 90° beugen. Isometrischer Muskelaufbau, der das Transplantat schont.", reps: "3 Sätze × 30-45 Sek. halten", cat: "A) Quadrizeps" },
+                        { name: "Nordic Hamstring Curls (negativ betont)", desc: "Fersen fixieren lassen, Oberkörper langsam nach vorne absenken. Extrem effektiv zur VKB-Protektion durch die Hamstrings.", reps: "3 Sätze × 5-8 Wdh.", cat: "B) Hamstrings" },
+                        { name: "Banded Lateral Walks (Monsterwalks)", desc: "Miniband um die Knöchel spannen, in tiefe Kniebeuge gehen und seitlich navigieren zur Stärkung des Gluteus medius.", reps: "3 Sätze × 15 Schritte pro Richtung", cat: "C) Hüfte & Gesäß" }
+                    ],
+                    milestones: [
+                        "Vollständig freie Beweglichkeit (Flexion > 115°)",
+                        "Vollständige Streckung (identisch zur gesunden Seite)",
+                        "LSI der Kniebeuge (Squat Symmetrie) > 75%",
+                        "Geringe bis keine Kniegelenksschwellung nach Belastung"
+                    ]
+                },
+                2: {
+                    timeline: "Woche 12 – 24",
+                    days: "Tag 85 - 168",
+                    title: "Phase 2: Fortgeschrittener Kraftaufbau",
+                    subtitle: "Maximierung der Kraftsymmetrie, Maximalkraftaufbau an den Oberschenkeln sowie fortgeschrittene Hamstring- und Adduktoren-Arbeit.",
+                    exercises: [
+                        { name: "Back Squat / Front Squat (Kniebeuge)", desc: "Stückweise die Tiefe steigern. Kein Valguskollaps zulassen. Fokus auf absolute Oberschenkeldichte und Rumpfspannung.", reps: "4 Sätze × 6-8 (Kraft) / 3 Sätze × 8-10 (Hyp.)", cat: "A) Quadrizeps" },
+                        { name: "Bulgarian Split Squats", desc: "Hinterer Fuß erhöht auf einer Bank ablegen. Das vordere Bein arbeitet alleine. Die wichtigste Übung für Beinsymmetrie!", reps: "3 Sätze × 8-10 Wdh. pro Bein", cat: "A) Quadrizeps" },
+                        { name: "Barbell Hip Thrust (Hüftstoß)", desc: "Langhantel auf die Hüftfalte ablegen, Schultern erhöht, Gesäß kraftvoll nach oben ausstoßen zur Gluteus-maximus-Maximierung.", reps: "4 Sätze × 8-10 Wdh.", cat: "B) Hüfte & Gesäß" },
+                        { name: "Kopenhagen Adductor Plank", desc: "Seitlage, oberen Fuß auf einer Bank fixieren, Körper anheben zur Stärkung der inneren Oberschenkelmuskulatur (Kniestabilität).", reps: "3 Sätze × 20-30 Sek. pro Seite", cat: "C) Adduktoren" },
+                        { name: "Single-Leg RDL (einbeinig rumänisches Kreuzheben)", desc: "Auf einem Bein stehen, Oberkörper mit geradem Rücken nach vorne kippen lassen, Fersen- und Hüftstrecker stabilisieren.", reps: "3 Sätze × 8-10 Wdh. pro Bein", cat: "B) Hamstrings" }
+                    ],
+                    milestones: [
+                        "Voller LSI Symmetrieindex > 85-90% bei Krafttests",
+                        "Absolvieren des 1-Minuten-Aufstehtests (> 22 Reps)",
+                        "Sicheres einbeiniges Beugen und beidbeiniges Landen",
+                        "LSI der einbeinigen Beinpresse > 125% des Körpergewichts"
+                    ]
+                },
+                3: {
+                    timeline: "Monat 6 – 9+",
+                    days: "Tag 169 - 365+",
+                    title: "Phase 3: Return to Sport & Leistungsoptimierung",
+                    subtitle: "Fokus auf stufenweise Plyometrie (Sprung- und Landetraining), Richtungswechsel, Schnelligkeit und sportartspezifische Drills.",
+                    exercises: [
+                        { name: "Bilateral Depth Drop (Niedriger Fall)", desc: "Von einer 30-cm-Box nach vorne herabgleiten lassen und leise, extrem abgefedert und stabil beidbeinig auf dem Boden landen.", reps: "3 Sätze × 6 Wdh.", cat: "A) Plyometrie (Stufe 1)" },
+                        { name: "Countermovement Jump auf Box", desc: "Dynamisch nach unten ausholen und explosiv beidbeinig auf eine Kiste/Box springen, um die Aufprallkraft beim Landen zu reduzieren.", reps: "3 Sätze × 5 Wdh.", cat: "A) Plyometrie (Stufe 2)" },
+                        { name: "Single-Leg Depth Drop (Einbeinlandung)", desc: "Von der Box gleiten lassen und stabil auf dem betroffenen Reha-Bein einbeinig landen, ohne dass das Knie nach innen knickt.", reps: "3 Sätze × 5 Wdh. pro Bein", cat: "A) Plyometrie (Stufe 3)" },
+                        { name: "Forward Lunge to Step Back", desc: "Dynamisch nach vorne springen, abrupt stoppen (Abbremstraining!) und explosiv nach hinten in die Startposition zurückdrücken.", reps: "3 Sätze × 8 Wdh. pro Bein", cat: "B) Agility & Bremstraining" },
+                        { name: "Agility Shuttle Drills (5-10-5)", desc: "Unter kontrolliertem, submaximalem Tempo Richtungswechsel durchführen zur Vorbereitung auf Feldaktivitäten.", reps: "3-5 Runden, mit reichlich Pause", cat: "C) Sportartspezifisch" }
+                    ],
+                    milestones: [
+                        "LSI (Symmetrie) bei Hop-Tests > 90%",
+                        "Psychologische Bereitschaft (ACL-RSI Score > 63)",
+                        "Keine Kniegelenksinstabilität (Pivot-Shift negativ)",
+                        "Keine Kniebeschwerden oder Erguss nach Sprints"
+                    ]
+                }
+            },
+            revision: { // Conservative / Slower path for Recidivism
+                0: {
+                    timeline: "Woche 0 – 8",
+                    days: "Tag 1 - 56",
+                    title: "Phase 0 (Rezidiv): Maximaler Schutz & Heilung",
+                    subtitle: "Das transplantierte Gewebe benötigt bei einer Revision deutlich mehr Zeit zum Einheilen. Belastungs- und Beuge-Vorsichtsmaßnahmen beachten!",
+                    exercises: [
+                        { name: "Passive Fersenerhöhung (Heel Prop)", desc: "Ferse 10 Minuten erhöht lagern, um eine Vernarbung in Beugestellung unbedingt zu verhindern.", reps: "4-5× täglich, 10 min", cat: "A) Beweglichkeit" },
+                        { name: "Heel Slides (Geführt)", desc: "Ganz sanfte Kniebeugung im Liegen, ggf. anfangs limitiert nach Absprache mit dem Chirurgen.", reps: "3 Sätze × 10-12 Wdh.", cat: "A) Beweglichkeit" },
+                        { name: "Quad Sets (isometrisch)", desc: "Spannung halten für 10 Sekunden. Täglich durchführen, um Muskelatrophie des Quadrizeps entgegenzuwirken.", reps: "3 Sätze × 20 Wdh. (10s halten)", cat: "B) Aktivierung" },
+                        { name: "Straight Leg Raise (ohne Gewicht)", desc: "Mit komplett gestrecktem Bein anheben, kein Durchhängen des Kniegelenks erlauben.", reps: "3 Sätze × 10-12 Wdh.", cat: "B) Aktivierung" },
+                        { name: "Core & Oberkörper-Kraft", desc: "Sitzendes Kurzhanteldrücken, Latziehen und Dead Bugs, um deine Athletik als Sportlerin aufrechtzuerhalten.", reps: "3 Sätze × 12 Wdh.", cat: "C) Rumpf & Oberkörper" }
+                    ],
+                    milestones: [
+                        "Volle Extensions-Symmetrie erreicht (Extension 0°)",
+                        "Kniebeugung schmerzfrei auf 90° (Einschränkungen beachten!)",
+                        "Vollständig hinkfreies Gangbild",
+                        "Kein Schock- oder Angstschmerz bei Alltagsbewegungen"
+                    ]
+                },
+                1: {
+                    timeline: "Woche 8 – 16",
+                    days: "Tag 57 - 112",
+                    title: "Phase 1 (Rezidiv): Konservative Kraftgrundlage",
+                    subtitle: "Langsame, kontrollierte Steigerung. Besondere Vorsicht an der Beinstrecker-Maschine (hier bis Woche 16 meiden oder nur 90°-60°).",
+                    exercises: [
+                        { name: "Beinpresse (zunächst beidbeinig)", desc: "Sicheres Stemmen mit exzellenter Knieachsenspur. Die Last kontrolliert steigern, kein Ruckeln.", reps: "3 Sätze × 12 Wdh.", cat: "A) Kraftaufbau" },
+                        { name: "Assisted Wall Squats", desc: "Wandkniebeugen mit einem Gymnastikball im Rücken zur Schonung des patellofemoralen Gelenks.", reps: "3 Sätze × 30 Sek. halten", cat: "A) Kraftaufbau" },
+                        { name: "Hamstring-Brücke (beidbeinig)", desc: "Fokus auf die hintere Oberschenkelseite. Bei Hamstring-Sehnen-Graft vorsichtig steigern.", reps: "3 Sätze × 12 Wdh.", cat: "B) Beinbeuger" },
+                        { name: "Banded Lateral Walks", desc: "Zwingend über den Knien platzieren, um keine lateralen Hebelkräfte auf das Kniegelenk zu übertragen.", reps: "3 Sätze × 12 Schritte pro Richtung", cat: "C) Hüfte & Gesäß" },
+                        { name: "Copenhagen Plank (Short Option)", desc: "In Seitlage auf den Knien liegend, um die Kniegelenksinnenmuskeln sanft zu stimulieren.", reps: "3 Sätze × 15-20 Sek. halten", cat: "C) Adduktoren" }
+                    ],
+                    milestones: [
+                        "Vollständige Kniebeugung (> 120°)",
+                        "Mindestens 80% Quadrizeps-Kraft im Vergleich zu gesund",
+                        "Absolut stabile Einbeinstand-Balance für 45 Sekunden",
+                        "Keinerlei Reizung oder Schwellung nach Alltagseinheiten"
+                    ]
+                },
+                2: {
+                    timeline: "Woche 16 – 32",
+                    days: "Tag 113 - 224",
+                    title: "Phase 2 (Rezidiv): Fortgeschrittene Symmetrierung",
+                    subtitle: "Intensiver Kraftaufbau mit verlängertem Zeitfenster zur vollen Symmetrieherstellung vor Beginn von dynamischen Sprüngen.",
+                    exercises: [
+                        { name: "Bulgarian Split Squats (mit Zusatzgewicht)", desc: "Die ultimative Symmetrie-Übung. Nutze Handtitel oder Kettlebells.", reps: "3 Sätze × 8 Wdh. pro Bein", cat: "A) Unilaterale Kraft" },
+                        { name: "Barbell Kniebeuge (Halbe Tiefe → Tief)", desc: "Kontrollierte Abwärtsbewegung. Vor dem Spiegel auf Knieausrichtung achten.", reps: "4 Sätze × 6-8 Wdh.", cat: "A) Kraftaufbau" },
+                        { name: "Nordic Hamstring Curls", desc: "Erhöhter Fokus, um ein exzellentes Verhältnis (Ratio > 0.6) zwischen Beinbeuger und Beinstrecker zu sichern.", reps: "4 Sätze × 6-8 Wdh.", cat: "B) Beinbeuger" },
+                        { name: "Einbeiniges Kreuzheben (SL RDL)", desc: "Optimiert die Kniegelenksstabilität und baut die Hüftstreckung perfekt auf.", reps: "3 Sätze × 8 Wdh. pro Bein", cat: "B) Hüfte" },
+                        { name: "Kopenhagen Plank (Vollversion)", desc: "Hervorragende Stabilisation für das Becken. Beugt dynamischen Instabilitäten bei Richtungswechseln vor.", reps: "3 Sätze × 20-30 Sek. pro Seite", cat: "C) Adduktoren" }
+                    ],
+                    milestones: [
+                        "Kraft-LSI von mindestens 90% an allen Muskelgruppen",
+                        "Schmerzfreies Laufen von 3-5 km geradlinig möglich",
+                        "Exzellente, sichere Landequalität bei beidbeinigen Drops",
+                        "Symptomfreie Bewältigung aller Krafttrainingstage"
+                    ]
+                },
+                3: {
+                    timeline: "Monat 8 – 15+",
+                    days: "Tag 225 - 450+",
+                    title: "Phase 3 (Rezidiv): Return to Sport & Feld-Reha",
+                    subtitle: "Die Rückkehr zum Sport verlangt bei Rezidiven äußerste Sorgfalt. Erst ab Monat 12 und bei LSI >95% wird Wettkampfsport empfohlen.",
+                    exercises: [
+                        { name: "Bilateral Depth Drop (Fokus Soft-Landing)", desc: "Geräuschloses Abfedern. Landung perfekt mit Knie über der 2. Zehe aussteuern.", reps: "3 Sätze × 6 Wdh.", cat: "A) Landetraining" },
+                        { name: "Bilateral Depth Jump with Dual Task", desc: "Depth Drop von der Box und beim Bodenkontakt direkt einen Ball fangen, um die Bewegung im Gehirn zu automatisieren.", reps: "3 Sätze × 5 Wdh.", cat: "B) Neuro-Plyometrie" },
+                        { name: "Sprint-to-Deceleration (Bremstraining)", desc: "Kurzer Sprint nach vorne, abrupt einbeinig auf dem Reha-Bein abbremsen, halten und stabil zurücksteigen.", reps: "3 Sätze × 6 Wiederholungen", cat: "C) Richtungswechsel" },
+                        { name: "Sportartspezifisches Training (kontaktlos)", desc: "Volle Einbindung in Übungsformen des Heimvereins, jedoch ohne direkten Körper- und Gegnerkontakt.", reps: "1-2 Trainingseinheiten pro Woche", cat: "D) Feld-Integration" }
+                    ],
+                    milestones: [
+                        "LSI von mindestens 95% in allen Belastungstests",
+                        "ACL-RSI Score > 75 (Hohes psychisches Vertrauen)",
+                        "Volles, freies Mannschaftstraining ohne Schwellung",
+                        "12 bis 18 Monate vergangen seit der Revisions-OP"
+                    ]
+                }
+            }
+        };
+
+        // Init logic on load
+        window.onload = function() {
+            setRehabMode('primary');
+            calculateCycleImpact();
+            calculateLSI();
+            updateRSI();
+        };
+
+        // Set Rehab Mode: Primary Surgery or Revision (Rezidiv)
+        function setRehabMode(mode) {
+            currentRehabMode = mode;
+            
+            const btnPrimary = document.getElementById('btnPrimaryMode');
+            const btnRevision = document.getElementById('btnRevisionMode');
+            const alertBox = document.getElementById('rehabModeAlert');
+
+            if (mode === 'primary') {
+                btnPrimary.className = "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 bg-white shadow-xs text-slate-800";
+                btnRevision.className = "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 text-slate-500 hover:text-slate-800";
+                alertBox.innerHTML = `⚠️ <span class="font-bold">Standard-Rehabilitation (Primär-OP):</span> Gezielte Steigerung auf 9–12 Monate Gesamtdauer ausgelegt.`;
+                alertBox.className = "mt-4 inline-block bg-tealbrand-50 border border-tealbrand-500/20 rounded-xl p-3 text-xs text-tealbrand-700";
+            } else {
+                btnPrimary.className = "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 text-slate-500 hover:text-slate-800";
+                btnRevision.className = "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-300 bg-brand-500 text-white shadow-xs";
+                alertBox.innerHTML = `🔄 <span class="font-bold">Rezidiv-Modus (Revision):</span> Konservativerer Zeitplan (12–18 Monate), verlangsamte Plyometrie und strikteres Monitoring zum Schutz deines Transplantats.`;
+                alertBox.className = "mt-4 inline-block bg-rose-50 border border-rose-500/20 rounded-xl p-3 text-xs text-rose-700";
+            }
+
+            // Sync indicators and render active phase
+            renderActivePhase();
+        }
+
+        // Render Current Phase Data
+        function renderActivePhase() {
+            const data = phaseData[currentRehabMode][activePhase];
+
+            // Update DOM headers
+            document.getElementById('phaseBadge').innerText = data.timeline.toUpperCase();
+            document.getElementById('phaseTimelineIndicator').innerText = data.days;
+            document.getElementById('phaseTitle').innerText = data.title;
+            document.getElementById('phaseSubtitle').innerText = data.subtitle;
+            document.getElementById('dayIndicator').innerText = data.timeline;
+
+            // Generate HTML for exercises
+            let exerciseHTML = "";
+            data.exercises.forEach(ex => {
+                exerciseHTML += `
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-300 transition-colors">
+                        <div>
+                            <span class="text-[10px] font-extrabold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md uppercase tracking-wider">${ex.cat}</span>
+                            <h4 class="text-sm font-bold text-slate-800 mt-1">${ex.name}</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">${ex.desc}</p>
+                        </div>
+                        <div class="flex-shrink-0 bg-white border border-slate-200 px-3 py-1.5 rounded-xl text-right">
+                            <span class="text-[9px] text-slate-400 block uppercase font-bold tracking-wider">Richtwert</span>
+                            <span class="text-xs font-extrabold text-slate-700">${ex.reps}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('exerciseSection').innerHTML = exerciseHTML;
+
+            // Generate HTML for Checklist/Milestones
+            let checklistHTML = "";
+            let checkedCount = 0;
+            data.milestones.forEach((milestone, idx) => {
+                const isChecked = checkedMilestones[currentRehabMode][activePhase][idx];
+                if (isChecked) checkedCount++;
+
+                checklistHTML += `
+                    <label class="flex items-start space-x-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 cursor-pointer hover:bg-slate-100 transition-all">
+                        <input type="checkbox" onchange="toggleMilestone(${idx})" ${isChecked ? 'checked' : ''} class="mt-0.5 w-4 h-4 rounded text-brand-500 focus:ring-brand-500 accent-brand-500">
+                        <span class="text-xs text-slate-700 font-medium">${milestone}</span>
+                    </label>
+                `;
+            });
+            document.getElementById('checklistContainer').innerHTML = checklistHTML;
+            document.getElementById('checkedCount').innerText = `${checkedCount}/${data.milestones.length}`;
+
+            // Sync visual subtab layout
+            switchSubTab(activeSubTab);
+        }
+
+        // Phase Navigation
+        function switchPhase(phaseIdx) {
+            activePhase = phaseIdx;
+
+            // Highlight active button
+            for (let i = 0; i < 4; i++) {
+                const tab = document.getElementById(`tabPhase${i}`);
+                const numBadge = tab.querySelector('span');
+
+                if (i === phaseIdx) {
+                    tab.className = "phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-100";
+                    numBadge.className = "bg-white text-brand-500 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold";
+                } else {
+                    tab.className = "phase-tab flex-shrink-0 flex items-center space-x-2 px-4 py-3 rounded-2xl border transition-all duration-300 font-semibold text-sm bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100";
+                    numBadge.className = "bg-slate-200 text-slate-700 w-5 h-5 rounded-full text-xs flex items-center justify-center font-bold";
+                }
+            }
+
+            renderActivePhase();
+        }
+
+        // Subtabs (Exercises vs. Checklist) switcher
+        function switchSubTab(tabName) {
+            activeSubTab = tabName;
+            const exBtn = document.getElementById('subTabExercises');
+            const chBtn = document.getElementById('subTabChecklist');
+
+            const exSec = document.getElementById('exerciseSection');
+            const chSec = document.getElementById('checklistSection');
+
+            if (tabName === 'exercises') {
+                exBtn.className = "pb-3 px-4 border-b-2 border-brand-500 font-semibold text-sm text-brand-500 transition-colors";
+                chBtn.className = "pb-3 px-4 border-b-2 border-transparent font-semibold text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center space-x-1.5";
+                
+                exSec.classList.remove('hidden');
+                chSec.classList.add('hidden');
+            } else {
+                chBtn.className = "pb-3 px-4 border-b-2 border-brand-500 font-semibold text-sm text-brand-500 transition-colors flex items-center space-x-1.5";
+                exBtn.className = "pb-3 px-4 border-b-2 border-transparent font-semibold text-sm text-slate-400 hover:text-slate-600 transition-colors";
+                
+                chSec.classList.remove('hidden');
+                exSec.classList.add('hidden');
+            }
+        }
+
+        // Checkbox interaction
+        function toggleMilestone(idx) {
+            checkedMilestones[currentRehabMode][activePhase][idx] = !checkedMilestones[currentRehabMode][activePhase][idx];
+            
+            // Re-render checklist counters
+            renderActivePhase();
+        }
+
+        // LSI (Limb Symmetry Index) Calculation Algorithm
+        function calculateLSI() {
+            const healthy = parseFloat(document.getElementById('uninjuredVal').value);
+            const injured = parseFloat(document.getElementById('injuredVal').value);
+
+            if (!healthy || !injured || healthy <= 0 || injured <= 0) {
+                return;
+            }
+
+            const lsi = (injured / healthy) * 100;
+            const lsiValueEl = document.getElementById('lsiValue');
+            const lsiBadgeEl = document.getElementById('lsiBadge');
+            const lsiFeedbackEl = document.getElementById('lsiFeedback');
+
+            lsiValueEl.innerText = `${lsi.toFixed(1)}%`;
+
+            // Evaluate readiness
+            if (lsi >= 95) {
+                lsiBadgeEl.innerText = "🟢 Exzellente Symmetrie";
+                lsiBadgeEl.className = "inline-block bg-teal-100 text-teal-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                lsiFeedbackEl.innerText = "Bereit für sportartspezifischen Wettkampf unter ärztlicher Absprache.";
+            } else if (lsi >= 90) {
+                lsiBadgeEl.innerText = "🟢 Bereit für Sport";
+                lsiBadgeEl.className = "inline-block bg-teal-100 text-teal-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                lsiFeedbackEl.innerText = "Empfohlene Schwelle für die allgemeine Rückkehr in deine Sportart erreicht.";
+            } else if (lsi >= 70) {
+                lsiBadgeEl.innerText = "🟡 Limitierte Freigabe";
+                lsiBadgeEl.className = "inline-block bg-amber-100 text-amber-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                lsiFeedbackEl.innerText = "Bereit für geradliniges Laufen (Symmetrie > 70%). Sprünge & Zweikämpfe noch untersagt.";
+            } else {
+                lsiBadgeEl.innerText = "🔴 Muskuläres Defizit";
+                lsiBadgeEl.className = "inline-block bg-rose-100 text-rose-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                lsiFeedbackEl.innerText = "Fokus auf gezielten einbeinigen (unilateralen) Kraftaufbau des betroffenen Beins.";
+            }
+        }
+
+        // Menstrual Cycle Impact Calculator
+        function calculateCycleImpact() {
+            const dayInput = parseInt(document.getElementById('cycleDayInput').value);
+            
+            // Guardrail limits
+            let day = isNaN(dayInput) ? 1 : dayInput;
+            if (day < 1) day = 1;
+            if (day > 28) day = 28;
+            document.getElementById('cycleDayInput').value = day;
+
+            const nameEl = document.getElementById('cyclePhaseName');
+            const riskEl = document.getElementById('cycleRiskDesc');
+            const recEl = document.getElementById('cycleRehabRec');
+
+            if (day >= 1 && day <= 13) {
+                nameEl.innerText = "Follikuläre Phase (Tag 1–13)";
+                nameEl.className = "text-xs font-extrabold text-teal-600";
+                riskEl.innerText = "Östrogen steigt an. Bindegewebe hat eine gute inhärente Stabilität. Optimale hormonelle Bedingungen für Kraftentwicklung.";
+                recEl.innerText = "Hervorragende Phase für schweres Krafttraining (Squats, Beinpresse). Erhöhe progressiv die Lasten!";
+                recEl.className = "text-[11px] text-teal-800 font-medium";
+            } else if (day >= 14 && day <= 16) {
+                nameEl.innerText = "Ovulationsphase (Eisprung - ca. Tag 14–16)";
+                nameEl.className = "text-xs font-extrabold text-rose-500 animate-pulse";
+                riskEl.innerText = "Östrogen hat seinen Peak erreicht. Studien zeigen eine temporär erhöhte Laxizität der Bänder und veränderte Propriozeption.";
+                recEl.innerText = "⚠️ Erhöhtes Verletzungsrisiko! Reduziere heute unvorbereitete Plyometrie und maximale einbeinige Grenzbelastungen.";
+                recEl.className = "text-[11px] text-rose-800 font-bold bg-rose-50 p-2 rounded-xl border border-rose-100";
+            } else {
+                nameEl.innerText = "Lutealphase (Tag 17–28)";
+                nameEl.className = "text-xs font-extrabold text-amber-600";
+                riskEl.innerText = "Progesteron ist dominant. Kann leicht reduzierte Bewegungskoordination und schnellere Ermüdung herbeiführen.";
+                recEl.innerText = "Fokus auf Technikarbeit, Ausdauerkonditionierung (Fahrrad) und neurokognitive Stabilität (Dual-Task-Gleichgewicht).";
+                recEl.className = "text-[11px] text-amber-800 font-medium";
+            }
+        }
+
+        // ACL-RSI (Psychological Readiness Assessment)
+        function updateRSI() {
+            const q1 = parseInt(document.getElementById('q1').value);
+            const q2 = parseInt(document.getElementById('q2').value);
+            const q3 = parseInt(document.getElementById('q3').value);
+
+            // Update text labels
+            document.getElementById('q1Val').innerText = `${q1}%`;
+            document.getElementById('q2Val').innerText = `${q2}%`;
+            document.getElementById('q3Val').innerText = `${q3}%`;
+
+            // Average score
+            const average = Math.round((q1 + q2 + q3) / 3);
+            const rsiValueEl = document.getElementById('rsiValue');
+            const rsiBadgeEl = document.getElementById('rsiBadge');
+            const rsiFeedbackEl = document.getElementById('rsiFeedback');
+
+            rsiValueEl.innerText = `${average}%`;
+
+            if (average >= 63) {
+                rsiBadgeEl.innerText = "🟢 Psychisch Bereit";
+                rsiBadgeEl.className = "inline-block bg-teal-100 text-teal-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                rsiFeedbackEl.innerText = "Ausreichendes Vertrauen in das Knie vorhanden, um die physischen Fertigkeiten umzusetzen.";
+            } else if (average >= 45) {
+                rsiBadgeEl.innerText = "🟡 Kinesiophobie mäßig";
+                rsiBadgeEl.className = "inline-block bg-amber-100 text-amber-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                rsiFeedbackEl.innerText = "Gewisses Zögern vorhanden. Baue vermehrt neurokognitives Training (Dual Task) ein.";
+            } else {
+                rsiBadgeEl.innerText = "🔴 Hohe Angst";
+                rsiBadgeEl.className = "inline-block bg-rose-100 text-rose-700 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full";
+                rsiFeedbackEl.innerText = "Sehr hohe Angst vor Re-Verletzung. Lass dich im Übergang sportpsychologisch beraten.";
+            }
+        }
+    </script>
+</body>
+</html>
